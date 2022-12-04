@@ -29,6 +29,16 @@
         "preLaunchTask": "ui:dev"
       },
       {
+        "name": "Front-end App Debug",
+        "type": "msedge",
+        "port": 9222,
+        "request": "launch",
+        "runtimeExecutable": "${workspaceFolder}/src-tauri/target/debug/umlboard-action-prototype.exe", // Remember to edit the right path to your app.
+        "useWebView": true,
+        "webRoot": "${workspaceFolder}",
+        "preLaunchTask": "ui:dev"
+      }, 
+      {
         "type": "chrome",
         "request": "launch",
         "name": "Frontend",
