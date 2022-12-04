@@ -1,15 +1,29 @@
-import { useState } from "react";
 import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/tauri";
 import "./App.css";
+import { useDispatch } from "react-redux";
+import { useRootSelector } from "./store";
+import { cancelNameChange, changeName, changingName } from "./edit-name.redux";
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+  
+  const name = useRootSelector(state => state.editName.currentName);
+  const dispatch = useDispatch();
+
+  // const [greetMsg, setGreetMsg] = useState("");
+  // const [name, setName] = useState("");
 
   async function greet() {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    setGreetMsg(await invoke("greet", { name })); 
+    console.log('hello');
+    // setGreetMsg(await invoke("greet", { name })); 
+  }
+
+  async function sendMessage<T>(action: {type: string, payload: T}) {
+    const actionName = action.type.split("/")[0];
+    const message = {
+      [actionName]: action.payload
+    };
+    console.log(JSON.stringify(message));
   }
 
   return (
@@ -34,15 +48,21 @@ function App() {
         <div>
           <input
             id="greet-input"
-            onChange={(e) => setName(e.currentTarget.value)}
+            value={name}
+            onChange={(e) => dispatch(changingName({newName: e.target.value}))}
             placeholder="Enter a name..."
           />
-          <button type="button" onClick={() => greet()}>
-            Greet
+          <button type="button" onClick={async () => {
+            await sendMessage(changeName({newName: name}));
+          }}>
+            Edit
+          </button>
+          <button type="button" onClick={() => dispatch(cancelNameChange())}>
+            Cancel
           </button>
         </div>
       </div>
-      <p>{greetMsg}</p>
+      <p>{''}</p>
     </div>
   );
 }

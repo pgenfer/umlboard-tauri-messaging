@@ -5,26 +5,6 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "macOS Frontend Debug",
-        "type": "chrome",
-        "port": 9222,
-        "request": "launch",
-        "timeout": 5000,
-        "runtimeExecutable": "${workspaceFolder}/src-tauri/target/debug/umlboard-action-prototype", 
-        "webRoot": "${workspaceFolder}",
-        "preLaunchTask": "ui:dev"
-      },  
-      {
-        "name": "Windows Frontend Debug",
-        "type": "msedge",
-        "port": 9222,
-        "request": "launch",
-        "timeout": 10000,
-        "runtimeExecutable": "${workspaceFolder}/src-tauri/target/debug/umlboard-action-prototype.exe",
-        "webRoot": "${workspaceFolder}/dist",
-        "preLaunchTask": "ui:dev"
-      },  
-      {
         "type": "lldb",
         "request": "launch",
         "name": "Tauri Development Debug",
@@ -46,7 +26,16 @@
           "args": ["build", "--release", "--manifest-path=./src-tauri/Cargo.toml"]
         },
         // task for the `beforeBuildCommand` if used, must be configured in `.vscode/tasks.json`
-        "preLaunchTask": "ui:build"
+        "preLaunchTask": "ui:dev"
+      },
+      {
+        "type": "chrome",
+        "request": "launch",
+        "name": "Frontend",
+        "url": "http://localhost:1420",
+        "webRoot": "${workspaceFolder}/src",
+        "preLaunchTask": "ui:dev",
+        "postDebugTask": "Terminate All Tasks"
       }
     ]
   }

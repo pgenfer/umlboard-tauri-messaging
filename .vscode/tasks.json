@@ -15,12 +15,18 @@
         "args": ["run", "dev"]
       },
       {
-        "label": "ui:build",
+        "label": "Terminate All Tasks",
+        "command": "echo ${input:terminate}",
         "type": "shell",
-        "isBackground": true,
-        // change this to your `beforeBuildCommand`:
-        "command": "npm",
-        "args": ["run", "dev"]
+        "problemMatcher": []
+      }
+    ],
+    "inputs": [
+      {
+        "id": "terminate",
+        "type": "command",
+        "command": "workbench.action.tasks.terminate",
+        "args": "terminateAll"
       }
     ]
   }
