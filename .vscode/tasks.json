@@ -17,9 +17,10 @@
       {
         "label": "ui:build",
         "type": "shell",
+        "isBackground": true,
         // change this to your `beforeBuildCommand`:
         "command": "npm",
-        "args": ["run", "build"]
+        "args": ["run", "dev"]
       }
     ]
   }

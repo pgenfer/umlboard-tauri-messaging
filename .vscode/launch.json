@@ -10,15 +10,19 @@
         "port": 9222,
         "request": "launch",
         "timeout": 5000,
-        "runtimeExecutable": "${workspaceFolder}/src-tauri/target/debug/umlboard-action-prototype", // Remember to edit the right path to your app.
-        // "useWebView": true,
-        // "url": "http://localhost:1420",
+        "runtimeExecutable": "${workspaceFolder}/src-tauri/target/debug/umlboard-action-prototype", 
         "webRoot": "${workspaceFolder}",
-        "preLaunchTask": "ui:dev",
-        // "runtimeArgs": [
-        //    "--remote-debugging-port=9222",
-        //    "--user-data-dir=remote-profile"
-        // ],
+        "preLaunchTask": "ui:dev"
+      },  
+      {
+        "name": "Windows Frontend Debug",
+        "type": "msedge",
+        "port": 9222,
+        "request": "launch",
+        "timeout": 10000,
+        "runtimeExecutable": "${workspaceFolder}/src-tauri/target/debug/umlboard-action-prototype.exe",
+        "webRoot": "${workspaceFolder}/dist",
+        "preLaunchTask": "ui:dev"
       },  
       {
         "type": "lldb",
