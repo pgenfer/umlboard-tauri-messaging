@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-type EditNameDto = {
-    newName: string
-}
+import { EditNameDto } from "./bindings/edit-name-dto";
 
 type State = {
     currentName: string
@@ -28,6 +25,7 @@ const editNameSlice = createSlice({
             state.currentName = 'UMLBoard';
         },
         nameChanged(state, action: PayloadAction<EditNameDto>) {
+            console.log('name changed called with: ' + action.payload.newName);
             // actually not necessary, but keep here
             state.currentName = action.payload.newName;
         },

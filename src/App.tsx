@@ -3,27 +3,26 @@ import "./App.css";
 import { useDispatch } from "react-redux";
 import { useRootSelector } from "./store";
 import { cancelNameChange, changeName, changingName } from "./edit-name.redux";
+import { invoke } from "@tauri-apps/api";
 
 function App() {
   
   const name = useRootSelector(state => state.editName.currentName);
   const dispatch = useDispatch();
 
-  // const [greetMsg, setGreetMsg] = useState("");
-  // const [name, setName] = useState("");
-
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    console.log('hello');
-    // setGreetMsg(await invoke("greet", { name })); 
-  }
-
   async function sendMessage<T>(action: {type: string, payload: T}) {
-    const actionName = action.type.split("/")[0];
+    const domain = action.type.split("/")[0]
+    const name = action.type.split("/")[1];
     const message = {
-      [actionName]: action.payload
+      domain, 
+      action: {
+        type: name,
+        payload: action.payload
+      }
     };
-    console.log(JSON.stringify(message));
+    const answer = await invoke<{type: string, payload: any}>("ipc_message",{message} );
+    console.log(JSON.stringify(answer));
+    dispatch(answer);
   }
 
   return (
@@ -57,7 +56,9 @@ function App() {
           }}>
             Edit
           </button>
-          <button type="button" onClick={() => dispatch(cancelNameChange())}>
+          <button type="button" onClick={async () => {
+            await sendMessage(cancelNameChange());
+          }}>
             Cancel
           </button>
         </div>
