@@ -10,16 +10,9 @@ function App() {
   const name = useRootSelector(state => state.editName.currentName);
   const dispatch = useDispatch();
 
-  async function sendMessage<T>(action: {type: string, payload: T}) {
-    const domain = action.type.split("/")[0]
-    const name = action.type.split("/")[1];
-    const message = {
-      domain, 
-      action: {
-        type: name,
-        payload: action.payload
-      }
-    };
+  async function sendMessage<T>(message: {type: string, payload: T}) {
+    //const domain = action.type.split("/")[0]
+    //const name = action.type.split("/")[1];
     const answer = await invoke<{type: string, payload: any}>("ipc_message",{message} );
     console.log(JSON.stringify(answer));
     dispatch(answer);
