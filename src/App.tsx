@@ -2,20 +2,32 @@ import reactLogo from "./assets/react.svg";
 import "./App.css";
 import { useDispatch } from "react-redux";
 import { useRootSelector } from "./store";
-import { cancelNameChange, changeName, changingName } from "./edit-name.redux";
 import { invoke } from "@tauri-apps/api";
+import { cancelClassifierRename, renameClassifier, renamingClassifier } from "./edit-name.redux";
+
+type IpcMessage = {
+  domain: string,
+  action: {type: string, payload: any}
+}
 
 function App() {
   
   const name = useRootSelector(state => state.editName.currentName);
   const dispatch = useDispatch();
 
-  async function sendMessage<T>(message: {type: string, payload: T}) {
-    //const domain = action.type.split("/")[0]
-    //const name = action.type.split("/")[1];
-    const answer = await invoke<{type: string, payload: any}>("ipc_message",{message} );
-    console.log(JSON.stringify(answer));
-    dispatch(answer);
+  async function sendMessage<T>(action: {type: string, payload: T}) {
+    const domain = action.type.split("/")[0]
+    const type = action.type.split("/")[1];
+    const message: IpcMessage = {
+      domain,
+      action: {...action, type }
+    };
+    const answer = await invoke<IpcMessage>("ipc_message", {message} );
+    const responseAction = {
+      ...answer.action,
+      type: `${answer.domain}/${answer.action.type}`
+    };
+    dispatch(responseAction);
   }
 
   return (
@@ -41,16 +53,16 @@ function App() {
           <input
             id="greet-input"
             value={name}
-            onChange={(e) => dispatch(changingName({newName: e.target.value}))}
+            onChange={(e) => dispatch(renamingClassifier({newName: e.target.value}))}
             placeholder="Enter a name..."
           />
           <button type="button" onClick={async () => {
-            await sendMessage(changeName({newName: name}));
+            await sendMessage(renameClassifier({newName: name}));
           }}>
             Edit
           </button>
           <button type="button" onClick={async () => {
-            await sendMessage(cancelNameChange());
+            await sendMessage(cancelClassifierRename());
           }}>
             Cancel
           </button>

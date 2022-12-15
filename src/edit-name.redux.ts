@@ -10,26 +10,24 @@ const initialState: State = {
 }
 
 const editNameSlice = createSlice({
-    name: 'editName',
+    name: 'classifier',
     initialState,
     reducers: {
-        changingName(state, action: PayloadAction<EditNameDto>) {
+        renamingClassifier(state, action: PayloadAction<EditNameDto>) {
             state.currentName = action.payload.newName;
         },
-        changeName(state, action: PayloadAction<EditNameDto>) {
-            // TODO: send to backend
-            state.currentName = action.payload.newName;
+        renameClassifier(state, action: PayloadAction<EditNameDto>) {
+            // handled by backend
         },
-        cancelNameChange(state) {
-            // TODO: send to backend
-            state.currentName = 'UMLBoard';
+        cancelClassifierRename(state) {
+            // handled by backend            
         },
-        nameChanged(state, action: PayloadAction<EditNameDto>) {
+        classifierRenamed(state, action: PayloadAction<EditNameDto>) {
             console.log('name changed called with: ' + action.payload.newName);
             // actually not necessary, but keep here
             state.currentName = action.payload.newName;
         },
-        nameChangeCanceled(state, action: PayloadAction<EditNameDto>) {
+        classifierRenameCanceled(state, action: PayloadAction<EditNameDto>) {
             // restore the name from core process
             state.currentName = action.payload.newName;
         }
@@ -37,4 +35,4 @@ const editNameSlice = createSlice({
 });
 
 export const editNameReducer = editNameSlice.reducer;
-export const {changeName, cancelNameChange, changingName} = editNameSlice.actions;
+export const {renamingClassifier, renameClassifier, cancelClassifierRename} = editNameSlice.actions;

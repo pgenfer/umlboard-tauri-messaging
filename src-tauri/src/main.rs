@@ -3,32 +3,29 @@
     windows_subsystem = "windows"
 )]
 
-use std::{collections::HashMap, string::String};
+use std::{string::String, collections::HashMap};
 use serde::{Serialize, Deserialize, de::DeserializeOwned};
-use serde_json::{json, Value};
+use serde_json::{Value};
 use ts_rs::TS;
 use std::string::ToString;
 use strum_macros::Display;
 
 #[tauri::command]
-fn ipc_message(message: Action) -> Action {
-    let (domain, r#type) = message.extract_domain_and_type();
-    let action = Action {r#type: r#type.to_string(), payload: message.payload.clone()};
-    let service = EditNameService{};
-    let service_handler = |action| service.receive_action(domain, action);
+fn ipc_message(message: IpcMessage) -> IpcMessage {
+    // Normally, we would have some kind of dictionary 
+    // with our services created during startup.
+    // In this example, we just create everything in place here for simplifaction
+    let service = ClassifierService{};
     let mut handlers = HashMap::new();
-    // we register an action handler for all actions of this domain
-    // this would normally be registered during application startup
-    handlers.insert(EDIT_NAME, service_handler);
-    let handler_option = handlers.get(&*domain); 
-    let response = match handler_option {
-        Some(handler) => {
-            let response_action = handler(action).unwrap();
-            response_action
-        }
-        None => service.create_no_op()
-    };
-    response // response is an action converted to a JSON object
+    handlers.insert(service.domain(), service);
+    
+    // this is were our actual command begins
+    let message_handler = handlers.get(&*message.domain).unwrap(); 
+    let response = message_handler.receive_action(message.action).unwrap();
+    IpcMessage {
+        domain: message_handler.domain(),
+        action: response
+    }
 }
 
 fn main() {
@@ -39,24 +36,10 @@ fn main() {
 }
 
 #[derive(Deserialize, Serialize)]
-struct Action {
-    r#type: String,
-    payload: Option<Value>
-}
-
-impl Action {
-    fn extract_domain_and_type(&self) -> (&str, &str) {
-       let domain_and_type: Vec<&str> = self.r#type.split("/").collect();
-       if domain_and_type.len() == 2 {
-            let domain = domain_and_type[0];
-            let r#type = domain_and_type[1];
-            (domain, r#type)
-       } else {
-            // action could not be separated
-            ("","")
-       }
-    }
-}
+struct IpcMessage {
+    domain: String,
+    action: Value
+} 
 
 #[derive(TS, Serialize, Deserialize)]
 #[ts(export, rename_all="camelCase")]
@@ -69,56 +52,54 @@ struct EditNameDto {
 #[derive(Serialize, Deserialize, Display)]
 #[serde(rename_all(serialize="camelCase", deserialize="camelCase"), tag = "type", content = "payload")]
 #[strum(serialize_all = "camelCase")]
-enum EditNameAction {
-    ChangeName(EditNameDto),
-    CancelNameChange,
-    NameChanged(EditNameDto),
-    NameChangeCanceled(EditNameDto),
-    NameChangedError
+enum ClassifierAction {
+    RenameClassifier(EditNameDto),
+    CancelClassifierRename,
+    ClassifierRenamed(EditNameDto),
+    ClassifierRenameCanceled(EditNameDto),
+    ClassifierRenameError
 }
 
 // we need one file with constants, like
 // this will also be generated for redux to use a slice name
-pub const EDIT_NAME: &str = "editName";
-
+pub const CLASSIFIER_DOMAIN: &str = "classifier";
 
 trait ActionHandler {
     type TActionType: DeserializeOwned + Serialize + std::fmt::Display;
 
-    /// TODO: remove this and simply return None
-    fn create_no_op(&self) -> Action {
-        Action { r#type: String::from("noOperation"), payload: None }
-    }
-
-    fn handle_action(&self, action: Self::TActionType) -> Result<Self::TActionType, serde_json::Error>;
-    
-    fn receive_action(&self, domain: &str, action: Action) -> Result<Action, serde_json::Error> {
-        // convert action to json object (otherwise we don't know how to parse it into an enum)
-        let json_action = json!({
-            "type": action.r#type,
-            "payload": action.payload
-        });
-        // convert payload to enum value
+    fn domain(&self) -> String;
+    fn handle_action(&self, action: Self::TActionType) -> Result<Self::TActionType, serde_json::Error>;    
+    fn receive_action(&self, json_action: Value) -> Result<Value, serde_json::Error> {
+        // convert json to action
         let incoming: Self::TActionType = serde_json::from_value(json_action)?;
+        // call action specific handler
         let response = self.handle_action(incoming)?;
-        let response_type = response.to_string();
+        // convert response to json
         let response_json = serde_json::to_value(response)?;
-        let mut response_action: Action = serde_json::from_value(response_json)?;
-        response_action.r#type = format!("{}/{}", domain, response_type);
-        Ok(response_action)
+        Ok(response_json)
     }
 }
 
-struct EditNameService {}
+struct ClassifierService {}
+impl ClassifierService {
+    pub fn update_classifier_name(&self, new_name: &str) -> () {/* TODO: implement */}
+}
+impl ActionHandler for ClassifierService {
+    type TActionType = ClassifierAction;
 
-impl ActionHandler for EditNameService {
-    type TActionType = EditNameAction;
-
+    fn domain(&self) -> String { CLASSIFIER_DOMAIN.to_string()}
     fn handle_action(&self, action: Self::TActionType) -> Result<Self::TActionType, serde_json::Error> {
         let response = match action {
-            EditNameAction::ChangeName(data) => EditNameAction::NameChanged(data),
-            EditNameAction::CancelNameChange => EditNameAction::NameChangeCanceled(EditNameDto { new_name: "UMLBoard".to_string() }),
-            _ => EditNameAction::NameChangedError
+            ClassifierAction::RenameClassifier(data) => {
+                self.update_classifier_name(&data.new_name);
+                ClassifierAction::ClassifierRenamed(data)
+            },
+            ClassifierAction::CancelClassifierRename =>
+                ClassifierAction::ClassifierRenameCanceled(
+                    EditNameDto { new_name: "Old Classname".to_string() }
+                )
+            ,
+            _ => ClassifierAction::ClassifierRenameError
         };
         Ok(response)
     }
