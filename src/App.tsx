@@ -12,7 +12,8 @@ type IpcMessage = {
 
 function App() {
   
-  const name = useRootSelector(state => state.editName.currentName);
+  const name = useRootSelector(state => state.classifier.currentName);
+  const editState = useRootSelector(state => state.classifier.editState);
   const dispatch = useDispatch();
 
   async function sendMessage<T>(action: {type: string, payload: T}) {
@@ -47,8 +48,8 @@ function App() {
         </a>
       </div>
 
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
+      <p>This is a small concept app to implement Redux-based IPC messaging.<br/>Change the name and press a button to confirm or cancel the change.</p>
+      <br/>
       <div className="row">
         <div>
           <input
@@ -69,7 +70,9 @@ function App() {
           </button>
         </div>
       </div>
-      <p>{''}</p>
+      {editState !== 'none' && <p className={editState === 'successful' ? 'change-successful' : 'change-canceled'}>
+        {editState === 'successful' ? 'Name was changed' : 'Editing was canceled.'}
+      </p>}
     </div>
   );
 }

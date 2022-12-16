@@ -100,3 +100,13 @@ button {
     background-color: #0f0f0f98;
   }
 }
+
+.change-successful {
+  font-weight: bold;
+  color: rgb(0, 150, 0);
+}
+
+.change-canceled {
+  font-weight: bold;
+  color: rgb(175, 0, 0);
+}
