@@ -1,0 +1,31 @@
+{"_id":"1DHn0YGEysqnveAc","name":"void","kind":"StandardType"}
+{"_id":"1zerbofMsM3CfmuF","discriminator":"Note","position":{"x":350,"y":245},"diagramId":"D3cZoscHoXzPAeB3","text":"dispatch","kind":"Note","showNoteBackgroundTexture":false,"autosize":true}
+{"_id":"3TauSLHTyHIrtaIx","name":"type","isAbstract":false,"type":"mZPKyij8LMeJ0tw8","isReadOnly":false,"isStatic":false,"classifierId":"ZwH0qqVJt4r7WTiF","discriminator":"Property","kind":"Property","index":0}
+{"_id":"7UYP9ptWU6aLpJp8","name":"123","kind":"StandardType"}
+{"_id":"977ZxDDPmxZluYcX","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"D3cZoscHoXzPAeB3","name":"Tauri Command","kind":"Class","position":{"x":555.5,"y":694},"discriminator":"Class","stereotypes":[],"customDimension":{"width":123.65625,"height":57.359375}}
+{"_id":"9z77QY2nbrIzq2ai","name":"payload","isAbstract":false,"type":"RtxNleRLpYqMOBRU","isReadOnly":false,"isStatic":false,"classifierId":"M8egVNvO4h2PvDFy","discriminator":"Property","kind":"Property","index":1}
+{"_id":"D3cZoscHoXzPAeB3","name":"new diagram","kind":"ClassDiagram","titlePosition":{"x":550,"y":24},"version":"1.8.2"}
+{"_id":"G0fJf8NjUGi0ZuYc","name":"Core","position":{"x":313,"y":633},"textPosition":{"x":223.078125,"y":24},"dimension":{"width":476,"height":146},"kind":"Group","diagramId":"D3cZoscHoXzPAeB3","lineStyle":"dashed","fillStyle":"solid"}
+{"_id":"G7Fqd1zXOCiOWPGk","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"D3cZoscHoXzPAeB3","name":"Component","kind":"Class","position":{"x":111.5,"y":203},"discriminator":"Class","stereotypes":[],"customDimension":{"width":141.390625,"height":70.359375}}
+{"_id":"I5UmVNfGv6F6W5QA","name":"double","kind":"StandardType"}
+{"_id":"LrkV9GcjuWnEWYh9","discriminator":"Note","position":{"x":653,"y":420},"diagramId":"D3cZoscHoXzPAeB3","text":"domain : string","kind":"Note","showNoteBackgroundTexture":false,"autosize":false,"customDimension":{"width":119.84375,"height":51}}
+{"_id":"M8egVNvO4h2PvDFy","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"D3cZoscHoXzPAeB3","name":"Action","kind":"Class","color":"#f9d286","position":{"x":326.5,"y":100},"discriminator":"Class","stereotypes":[],"customDimension":{"width":110.03125,"height":108.15625}}
+{"_id":"Oq4oXhgjJcd1nerN","name":"payload","isAbstract":false,"type":"RtxNleRLpYqMOBRU","isReadOnly":false,"isStatic":false,"classifierId":"ZwH0qqVJt4r7WTiF","discriminator":"Property","kind":"Property","index":1}
+{"_id":"R6Igh6qnK6L90luK","name":"","diagramId":"D3cZoscHoXzPAeB3","kind":"Relationship","relationshipKind":"Usage","source":{"id":"G7Fqd1zXOCiOWPGk","isAutoDocking":true,"positionInPercent":0.5},"target":{"id":"gQtec2UzOlGWG4fH","isAutoDocking":true,"positionInPercent":0.5,"isNavigable":true}}
+{"_id":"RtxNleRLpYqMOBRU","name":"any","kind":"StandardType"}
+{"_id":"WbJMyPnHWFCHo9Sz","discriminator":"Note","position":{"x":504,"y":67},"diagramId":"D3cZoscHoXzPAeB3","text":"Before sending the action, extract the domain from the action type.\n\nWrap everything in a IpcMessage and send it to the core process.","kind":"Note","showNoteBackgroundTexture":false,"autosize":false,"customDimension":{"width":266.53125,"height":135}}
+{"_id":"Xb3VwEbjtqagcQNH","name":"char","kind":"StandardType"}
+{"_id":"YTKIFqSsbAVbeQmy","name":"Webview","position":{"x":74,"y":45},"textPosition":{"x":326.3828125,"y":24},"dimension":{"width":708,"height":268},"kind":"Group","diagramId":"D3cZoscHoXzPAeB3","lineStyle":"dashed","fillStyle":"solid"}
+{"_id":"ZwH0qqVJt4r7WTiF","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"D3cZoscHoXzPAeB3","name":"Action","kind":"Class","color":"#f9d286","position":{"x":658.5,"y":470},"discriminator":"Class","stereotypes":[],"customDimension":{"width":110.03125,"height":108.15625}}
+{"_id":"a1OY7M0OoCpIxp9h","name":"type","isAbstract":false,"type":"mZPKyij8LMeJ0tw8","isReadOnly":false,"isStatic":false,"classifierId":"M8egVNvO4h2PvDFy","discriminator":"Property","kind":"Property","index":0}
+{"_id":"eePfMgXaJHhwH0OY","name":"int","kind":"StandardType"}
+{"_id":"fp1s1lmwrOtArJuF","name":"IpcMessage","position":{"x":638,"y":367},"textPosition":{"x":37.1640625,"y":24},"dimension":{"width":148,"height":229},"kind":"Group","diagramId":"D3cZoscHoXzPAeB3","lineStyle":"solid","fillStyle":"solid"}
+{"_id":"gQtec2UzOlGWG4fH","isAbstract":false,"isFinal":false,"isInterface":false,"diagramId":"D3cZoscHoXzPAeB3","name":"Redux Middleware","kind":"Class","position":{"x":544.5,"y":212},"discriminator":"Class","stereotypes":[],"customDimension":{"width":142.734375,"height":64.359375}}
+{"_id":"mZPKyij8LMeJ0tw8","name":"string","kind":"StandardType"}
+{"_id":"nW91tt1WUHgk227l","name":"time","kind":"StandardType"}
+{"_id":"qHobWIyZli01fySm","discriminator":"Note","position":{"x":325,"y":656},"diagramId":"D3cZoscHoXzPAeB3","text":"Tauri commands are special methods that can be called by the Webview through the Invoke-API.","kind":"Note","showNoteBackgroundTexture":false,"autosize":false,"customDimension":{"width":199.921875,"height":105}}
+{"_id":"qeIqnZyuDz7a2iBj","discriminator":"Note","position":{"x":531,"y":458},"diagramId":"D3cZoscHoXzPAeB3","text":"invoke","kind":"Note","showNoteBackgroundTexture":false,"autosize":false,"customDimension":{"width":75.890625,"height":66}}
+{"_id":"rYfzRnuAusaLQkDd","name":"","diagramId":"D3cZoscHoXzPAeB3","kind":"Relationship","relationshipKind":"Usage","source":{"id":"gQtec2UzOlGWG4fH","isAutoDocking":true,"positionInPercent":0.5},"target":{"id":"977ZxDDPmxZluYcX","isAutoDocking":true,"positionInPercent":0.5,"isNavigable":true}}
+{"_id":"x9glkZwBxwXtXFec","name":"date","kind":"StandardType"}
+{"_id":"xcGdrYnYGG0zD4SO","name":"float","kind":"StandardType"}
+{"_id":"zxOZPGWIUMlBsNqW","name":"boolean","kind":"StandardType"}

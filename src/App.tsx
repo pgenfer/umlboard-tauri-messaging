@@ -16,8 +16,9 @@ function App() {
   const dispatch = useDispatch();
 
   async function sendMessage<T>(action: {type: string, payload: T}) {
-    const domain = action.type.split("/")[0]
-    const type = action.type.split("/")[1];
+    const actionIdentifiers = action.type.split("/");
+    const domain = actionIdentifiers[0]
+    const type = actionIdentifiers[1];
     const message: IpcMessage = {
       domain,
       action: {...action, type }
