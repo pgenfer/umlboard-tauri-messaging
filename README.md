@@ -1,6 +1,6 @@
 # Moving from Electron to Tauri - IPC Messaging
 
-This small sample application is the first [part](https://www.umlboard.com/blog/moving-from-electron-to-tauri-1/) of a blog series investigating how some of [UMLBoard's](https://www.umlboard.com) core concepts could be ported to [Tauri](https://tauri.app/).
+This small sample application is the first [part](https://www.umlboard.com/blog/moving-from-electron-to-tauri-1/) of a blog series investigating how some of [UMLBoard's](https://www.umlboard.com) core concepts can be ported to [Tauri](https://tauri.app/).
 
 ![A sample application written in Tauri](./concepts/example-application.png)
 
@@ -12,7 +12,7 @@ See the following diagram for an overview of UMLBoard's inter-process communicat
 
 The sample application in this repository demonstrates how this messaging system can be ported from Electron to Tauri with relatively little implementation effort.
 
-The project uses the React+Tauri+Vite template with additional dependencies to the Redux Toolkit.
+The project uses the React+Tauri+Vite template with additional dependencies to the [Redux Toolkit](https://redux-toolkit.js.org/).
 
 ## Building the Sample Application
 
